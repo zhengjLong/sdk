@@ -7,7 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
+import com.library.base.R;
+import com.library.base.photopicker.utils.GlideDisplay;
 import com.library.base.photopicker.utils.PhotoUtils;
 
 import java.util.ArrayList;
@@ -27,11 +31,18 @@ public class DisplayPhotoAdapter extends PagerAdapter {
     private ArrayList<String> mImagePaths;
     private Context mContext;
     private int mDefaultPic;
+    private RequestOptions options;
 
     public DisplayPhotoAdapter(Context mContext, ArrayList<String> mImagePaths, int mDefaultPic) {
         this.mContext = mContext;
         this.mImagePaths = mImagePaths;
         this.mDefaultPic = mDefaultPic;
+        options = new RequestOptions()
+                .centerCrop()
+                .placeholder(mDefaultPic)
+                .error(mDefaultPic)
+                .priority(Priority.HIGH)
+                .diskCacheStrategy(DiskCacheStrategy.ALL);
     }
 
     @Override
@@ -70,9 +81,7 @@ public class DisplayPhotoAdapter extends PagerAdapter {
      */
     private void displayImage(String mImagePath, PhotoView mPhotoView) {
         if (PhotoUtils.checkURL(mImagePath)) {
-            Glide.with(mContext).load(mImagePath)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .error(mDefaultPic).into(mPhotoView);
+            Glide.with(mContext).load(mImagePath).apply(options).into(mPhotoView);
         } else {
             mPhotoView.setImageBitmap(PhotoUtils.decodeBitmapSd(mImagePath));
         }

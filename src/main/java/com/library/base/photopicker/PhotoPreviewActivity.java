@@ -1,5 +1,6 @@
 package com.library.base.photopicker;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +16,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.library.base.R;
 import com.library.base.photopicker.beans.MediaBean;
 import com.library.base.photopicker.beans.SelectStatusEvent;
@@ -50,6 +54,9 @@ public class PhotoPreviewActivity extends AppCompatActivity {
     View rl_show_select;
 //    private List<MediaBean> selectMediaBeans=null;
     private long maxSize =0l;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -216,10 +223,21 @@ public class PhotoPreviewActivity extends AppCompatActivity {
     class ViewPagerAdapter extends PagerAdapter {
         private List<MediaBean> allPicFiles;// 所有图片
         private MediaBean mf;
+        private RequestOptions options;
+
 
         public ViewPagerAdapter(List<MediaBean> sysallPicFiles) {
             super();
             this.allPicFiles = sysallPicFiles;
+
+            options = new RequestOptions()
+                    .centerCrop()
+                    .placeholder(R.color.colorTextStyleA9)
+                    .error(R.color.colorTextStyleA9)
+                    .priority(Priority.HIGH)
+                    .dontAnimate()
+                    .dontTransform()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL);
         }
 
 
@@ -239,32 +257,28 @@ public class PhotoPreviewActivity extends AppCompatActivity {
         public void destroyItem(ViewGroup container, int position, Object object) {
             container.removeView((View) object);
         }
+
+
+        @SuppressLint("CheckResult")
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             mf = allPicFiles.get(position);
             if(mf.isPhoto()){
                 PhotoView photoView = new PhotoView(container.getContext());
                 photoView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-//                DrawableRequestBuilder builder =Glide.with(this)
-//                        .load(new File(mf.getRealPath()));
-//
-//                builder.into(photoView);
 
                 int[] size = PhotoUtils.getBitmapWidthAndHeight(mf.getRealPath());
                 if(size[0]*size[1] > maxSize){
 
+                    options.override(PhotoUtils.getDeviceWidth(PhotoPreviewActivity.this) > size[0] ? size[0] : PhotoUtils.getDeviceWidth(PhotoPreviewActivity.this),
+                            PhotoUtils.getDeviceHeight(PhotoPreviewActivity.this) > size[1] ? size[1] : PhotoUtils.getDeviceHeight(PhotoPreviewActivity.this));
+
                     Glide.with(PhotoPreviewActivity.this)
-                            .load(new File(mf.getRealPath()))
-                            .dontAnimate()
-                            .dontTransform()
-                            .override(PhotoUtils.getDeviceWidth(PhotoPreviewActivity.this) > size[0] ? size[0] : PhotoUtils.getDeviceWidth(PhotoPreviewActivity.this),
-                                    PhotoUtils.getDeviceHeight(PhotoPreviewActivity.this) > size[1] ? size[1] : PhotoUtils.getDeviceHeight(PhotoPreviewActivity.this))
+                            .load(new File(mf.getRealPath())).apply(options)
                             .into(photoView);
                 }else{
                     Glide.with(PhotoPreviewActivity.this)
                             .load(new File(mf.getRealPath()))
-                            .dontAnimate()
-                            .dontTransform()
                             .into(photoView);
                 }
                 container.addView(photoView, ViewGroup.LayoutParams.MATCH_PARENT,

@@ -14,9 +14,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.library.base.R;
 import com.library.base.photopicker.adapters.DisplayPhotoAdapter;
+import com.library.base.photopicker.utils.GlideDisplay;
 import com.library.base.photopicker.utils.PhotoUtils;
 
 import java.io.File;
@@ -43,6 +46,7 @@ public class DisplayPhotoActivity extends AppCompatActivity {
     private int mDefaultPic;//默认的显示图片
     private int mPosition;//当前显示的照片页码
     private ArrayList<String> mImagePaths;//保存显示的图片数组的路径
+    private RequestOptions options;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +68,12 @@ public class DisplayPhotoActivity extends AppCompatActivity {
         mImagePaths = (ArrayList<String>) mBundle.getSerializable("imagePaths");
         mPosition = mBundle.getInt("position");
         mDefaultPic = mBundle.getInt("defaultPic") == 0 ? R.mipmap.icon_default_pic : mBundle.getInt("defaultPic");
+        options = new RequestOptions()
+                .centerCrop()
+                .placeholder(mDefaultPic)
+                .error(mDefaultPic)
+                .priority(Priority.HIGH)
+                .diskCacheStrategy(DiskCacheStrategy.ALL);
     }
 
     /**
@@ -122,8 +132,7 @@ public class DisplayPhotoActivity extends AppCompatActivity {
         }
         if (PhotoUtils.checkURL(mImagePaths.get(0))) {
             Glide.with(this).load(mImagePaths.get(0))
-                    .error(mDefaultPic)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .apply(options)
                     .into(mLeaflet);
         } else {
             Bitmap mBitmap = PhotoUtils.decodeBitmapSd(mImagePaths.get(0));
