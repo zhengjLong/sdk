@@ -17,6 +17,7 @@ android {
         buildConfigField("String", "APP_ADD_CERTIFICATE", "\"0\"")//是否请求加证书
         buildConfigField("String", "APP_ADD_INTERCEPTOR", "\"0\"")//是否请求加拦截器
         buildConfigField("String", "APP_SIGN_PARAMS", "\"0\"")//是否请求验签
+        buildConfigField("String", "APP_COOKIE_UPDATA", "\"0\"")//是否添加cookie过期更新
         buildConfigField("String", "APP_POST_KEY_VALUE", "\"1\"")//是否post请求方式为健值对
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 

@@ -4,10 +4,21 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.library.base.BuildConfig;
+
+import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.List;
+
+import okhttp3.Cookie;
+
 
 /**
- * @Author: jerome
- * @Date: 2017-09-20
+ * 数据存储
+ * @author : jerome
+ * @version : 2017-09-20
  */
 public class SdkPreference {
 
@@ -15,6 +26,7 @@ public class SdkPreference {
     private static final String KEY_TOKEN = "token";
     public static final String REMOTEID = "remoteId";
     private static final String KEY_USER_INFO = "userInfo";
+    private static final String KEY_COOKIE= "cookie";
     private static SdkPreference instance;
     private SharedPreferences sp;
 
@@ -55,6 +67,27 @@ public class SdkPreference {
 
     public String getRefreshToken() {
         return getString(KEY_REFRESH_TOKEN, null);
+    }
+
+
+    /**
+     * 保存cookie
+     */
+    public void saveCookie(List<Cookie> cookies){
+        HashMap<String, List<Cookie>> cookieStore = new HashMap<>();
+        cookieStore.put(BuildConfig.APP_BASE_RUL+"shiro-2", cookies);
+        putString(KEY_COOKIE,new Gson().toJson(cookieStore));
+    }
+
+    /**
+     * 获得cookie
+     * @return
+     */
+    public List<Cookie> getCookie(){
+        Type type = new TypeToken<HashMap<String, List<Cookie>>>() {}.getType();
+        HashMap<String, List<Cookie>> cookieStore =  new Gson().fromJson(getString(KEY_COOKIE,""),type);
+        if (null == cookieStore) return null;
+        return cookieStore.get(BuildConfig.APP_BASE_RUL+"shiro-2");
     }
 
 

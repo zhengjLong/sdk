@@ -9,7 +9,7 @@ import com.google.gson.Gson;
 import com.library.base.BuildConfig;
 import com.library.base.R;
 import com.library.base.utils.Logcat;
-import com.library.base.utils.NetworkUtil;
+import com.library.base.utils.SdkPreference;
 import com.library.base.utils.SdkUtil;
 import com.library.base.utils.SignUtils;
 
@@ -20,7 +20,9 @@ import java.lang.ref.WeakReference;
 import java.security.KeyStore;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateFactory;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
@@ -32,7 +34,10 @@ import javax.net.ssl.TrustManagerFactory;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.Cookie;
+import okhttp3.CookieJar;
 import okhttp3.FormBody;
+import okhttp3.HttpUrl;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -44,18 +49,20 @@ import okhttp3.Response;
 /**
  * 请求处理
  *
- * @Author: jerome
- * @Date: 2017-09-20
+ * @author : jerome
+ * @version : 2017-09-20
  */
 public class HttpEngine {
 
-    private static String BASE_URL = BuildConfig.APP_BASE_RUL;
-    private String addInterceptor = BuildConfig.APP_ADD_INTERCEPTOR;
-    private String signParams = BuildConfig.APP_SIGN_PARAMS;
+    private static String BASE_URL = BuildConfig.APP_BASE_RUL;//app短路径
+    private String addInterceptor = BuildConfig.APP_ADD_INTERCEPTOR;//是否添加拦截器
+    private String addCookieUpdata = BuildConfig.APP_COOKIE_UPDATA;//是否自动更新cookie
+    private String addCertificate = BuildConfig.APP_ADD_CERTIFICATE;//是否添加证书
+    private String signParams = BuildConfig.APP_SIGN_PARAMS;//是否进行验签
     private String postKeyValue = BuildConfig.APP_POST_KEY_VALUE;//默认post键值对
     private static String APP_SECRET;
 
-    private static final int CONNECT_TIME_OUT = 60;
+    private static final int CONNECT_TIME_OUT = 60;//请求超时时间
     private static final MediaType JSON_MEDIA_TYPE = MediaType.parse("application/json; charset=utf-8");
 
     private static WeakReference<HttpEngine> sInstance;
@@ -81,9 +88,50 @@ public class HttpEngine {
 
         addInterceptor(builder);
 
+        addCookie(builder);
+
         builder.connectTimeout(CONNECT_TIME_OUT, TimeUnit.SECONDS)
                 .readTimeout(CONNECT_TIME_OUT, TimeUnit.SECONDS).writeTimeout(CONNECT_TIME_OUT, TimeUnit.SECONDS);
         return builder.build();
+    }
+
+    /**
+     * 添加cookie参数
+     *
+     * @param builder
+     */
+    private void addCookie(OkHttpClient.Builder builder) {
+
+        if ("0".equals(addCookieUpdata)) return;
+
+        builder.cookieJar(new CookieJar() {
+
+            @Override
+            public void saveFromResponse(HttpUrl url, List<Cookie> cookies) {
+                SdkPreference.getInstance().saveCookie(cookies);
+                for (Cookie cookie : cookies) {
+                    Logcat.INSTANCE.e("cookie Name:" + cookie.name());
+                    Logcat.INSTANCE.e("cookie Value:" + cookie.value());
+                }
+            }
+
+            @Override
+            public List<Cookie> loadForRequest(HttpUrl url) {
+
+                List<Cookie> cookies = SdkPreference.getInstance().getCookie();
+
+                if (cookies == null) {
+                    Logcat.INSTANCE.e("没加载到cookie");
+                } else {
+                    Logcat.INSTANCE.e("已有cookie");
+                    for (Cookie cookie : cookies) {
+                        Logcat.INSTANCE.e("cookie Name:" + cookie.name());
+                        Logcat.INSTANCE.e("cookie Value:" + cookie.value());
+                    }
+                }
+                return cookies != null ? cookies : new ArrayList<Cookie>();
+            }
+        });
     }
 
     /**
@@ -94,6 +142,9 @@ public class HttpEngine {
     private void addInterceptor(OkHttpClient.Builder builder) {
         if ("1".equals(addInterceptor))
             builder.addInterceptor(new TokenInterceptor(mContext));
+
+        if ("1".equals(addCookieUpdata))
+            builder.addInterceptor(new CookieInterceptor(mContext));
     }
 
     /**
@@ -102,7 +153,7 @@ public class HttpEngine {
      * @param builder
      */
     private void addCertificate(OkHttpClient.Builder builder) {
-        String addCertificate = BuildConfig.APP_ADD_CERTIFICATE;
+
         if ("1".equals(addCertificate)) {
             try {
                 InputStream inputStream = mContext.getResources().openRawResource(R.raw.domain);
@@ -140,6 +191,15 @@ public class HttpEngine {
             sInstance = new WeakReference<>(new HttpEngine(context));
         }
         return sInstance.get();
+    }
+
+    /**
+     * 清除单例
+     */
+    public static void clearInstance() {
+        if (sInstance != null) {
+            sInstance.clear();
+        }
     }
 
     /**
@@ -242,24 +302,24 @@ public class HttpEngine {
         if (paramMap != null && paramMap.size() > 0) {
             sb.append("?").append(signParamsToUrlParams(urlPath, paramMap));
         }
-        sendRequest(new Request.Builder().url(sb.toString()).build(), new HttpResponseCallBack<>(classOfT, httpCallback, mHandler));
+        sendRequest(addRequestHead().url(sb.toString()).build(), new HttpResponseCallBack<>(classOfT, httpCallback, mHandler));
     }
 
 
     /**
-     * POST 请求，返回TEXT 类型数据
+     * POST 请求，返回TEXT 类型数据：请求类型格式通过build.grade配置
      *
      * @param fullUrl  全路径
      * @param params   参数
      * @param callback 回调
      */
     public void post(String fullUrl, Map<String, String> params, HttpCallback<String> callback) {
-        Request builder = getPostBuilder(fullUrl, params);
+        Request builder = getPostBuilder(postKeyValue, fullUrl, params);
         sendRequest(builder, new HttpTextResponseCallBack(callback, mHandler));
     }
 
     /**
-     * POST 请求
+     * 默认POST请求 ：请求类型格式通过build.grade配置
      *
      * @param urlPath      短路径
      * @param paramMap     参数
@@ -268,12 +328,27 @@ public class HttpEngine {
      * @param <T>          实体
      */
     public <T> void post(String urlPath, Map<String, String> paramMap, Class<T> classOfT, HttpCallback<T> httpCallback) {
-        Request builder = getPostBuilder(urlPath, paramMap);
+        Request builder = getPostBuilder(postKeyValue, urlPath, paramMap);
+        sendRequest(builder, new HttpResponseCallBack<>(classOfT, httpCallback, mHandler));
+    }
+
+
+    /**
+     * 默认POST key-value方式请求
+     *
+     * @param urlPath
+     * @param paramMap
+     * @param classOfT
+     * @param httpCallback
+     * @param <T>
+     */
+    public <T> void postKeyValue(String urlPath, Map<String, String> paramMap, Class<T> classOfT, HttpCallback<T> httpCallback) {
+        Request builder = getPostBuilder("1", urlPath, paramMap);
         sendRequest(builder, new HttpResponseCallBack<>(classOfT, httpCallback, mHandler));
     }
 
     /**
-     * 同步的POST 请求
+     * 同步的POST 请求：请求类型格式通过build.grade配置
      *
      * @param <T>    实体
      * @param url    短路径
@@ -281,7 +356,7 @@ public class HttpEngine {
      * @return 返回原始数据
      */
     public <T> ApiResponseModel<T> syncPost(String url, Map<String, String> params, Class<T> cls) {
-        Request builder = getPostBuilder(url, params);
+        Request builder = getPostBuilder(postKeyValue, url, params);
         return sendSyncRequest(builder, cls);
     }
 
@@ -292,11 +367,23 @@ public class HttpEngine {
      * @param paramMap
      * @return
      */
-    public Request getPostBuilder(String urlPath, Map<String, String> paramMap) {
+    public Request getPostBuilder(String postKeyValue, String urlPath, Map<String, String> paramMap) {
         String url = urlPath.startsWith("http") ? urlPath : BASE_URL + urlPath;
-        RequestBody body = addPostValue(urlPath, paramMap);
+        RequestBody body = addPostValue(postKeyValue, urlPath, paramMap);
 
-        return new Request.Builder().post(body).url(url).build();
+        return addRequestHead().post(body).url(url).build();
+    }
+
+    /**
+     * 添加请求头
+     *
+     * @return
+     */
+    private Request.Builder addRequestHead() {
+//        TODO 添加请求头
+        Request.Builder builder = new Request.Builder();
+//            builder.addHeader("sessionId",sessionId);
+        return builder;
     }
 
     /**
@@ -306,10 +393,10 @@ public class HttpEngine {
      * @param paramMap
      * @return
      */
-    private RequestBody addPostValue(String urlPath, Map<String, String> paramMap) {
+    private RequestBody addPostValue(String postKeyValue, String urlPath, Map<String, String> paramMap) {
         if ("1".equals(postKeyValue)) {
             FormBody.Builder body = new FormBody.Builder();
-            if (null != paramMap){
+            if (null != paramMap) {
                 for (Map.Entry<String, String> item : paramMap.entrySet()) {
                     String value = item.getValue();
 //                value = URLEncoder.encode(value);
@@ -369,25 +456,26 @@ public class HttpEngine {
      */
     private <T> void sendRequest(Request builder, BaseHttpResponse<T> response) {
         if (!NetworkUtil.checkConnection(mContext)) {
-            response.notifyFailure(ApiErrorCode.ERROR_NET_WORK);
+            response.notifyFailure(ApiErrorCode.ERROR_NOT_NET_WORK);
             return;
         }
-
         newCall(builder).enqueue(response); // 发出请求
     }
 
     private Call newCall(Request builder) {
-//        builder.addHeader("android-model", Build.MODEL)
+//        添加请求头
+//        builder.addHeader("android-model", Build.MODEL);
         return mOkHttpClient.newCall(builder);
     }
 
     /**
-     *上传文件
+     * 上传文件
+     *
      * @param paramsMap 参数
-     * @param callBack 回调
+     * @param callBack  回调
      * @param <T>
      */
-    public <T>void upLoadFile(String requestUrl, HashMap<String, Object> paramsMap, final Class<T> mClass, final HttpCallback<T> callBack) {
+    public <T> void upLoadFile(String requestUrl, HashMap<String, Object> paramsMap, final Class<T> mClass, final HttpCallback<T> callBack) {
         try {
             MultipartBody.Builder builder = new MultipartBody.Builder();
             builder.setType(MultipartBody.FORM);
@@ -412,7 +500,7 @@ public class HttpEngine {
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            callBack.onFailure(0,"上传失败");
+                            callBack.onFailure(0, "上传失败");
                         }
                     });
                 }
@@ -434,7 +522,7 @@ public class HttpEngine {
                         mHandler.post(new Runnable() {
                             @Override
                             public void run() {
-                                callBack.onFailure(0,"上传失败");
+                                callBack.onFailure(0, "上传失败");
                             }
                         });
                     }
