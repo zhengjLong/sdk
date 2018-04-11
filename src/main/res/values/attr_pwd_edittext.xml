@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="PwdEditText">
+        <!-- 外部边缘线宽度 -->
+        <attr name="outLineWidth" format="dimension"/>
+        <!-- 外边缘圆弧半径 -->
+        <attr name="outRadius" format="dimension"/>
+        <!-- 外部边缘线条颜色 -->
+        <attr name="outLineColor" format="color"/>
+        <!-- 间隔线宽度 -->
+        <attr name="dividerLineWidth" format="dimension"/>
+        <!-- 间隔线颜色 -->
+        <attr name="dividerLineColor" format="color"/>
+        <!-- 圆点半径 -->
+        <attr name="dotRadius" format="dimension"/>
+        <!-- 圆点颜色 -->
+        <attr name="dotColor" format="color"/>
+        <!-- 输入框宽度 -->
+        <attr name="inputBoxWidth" format="dimension"/>
+        <!-- 密码长度(默认为6) -->
+        <attr name="pwdLength" format="integer"/>
+    </declare-styleable>
+</resources>

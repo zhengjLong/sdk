@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:background="@android:color/black"
+    >
+
+    <com.library.base.photopicker.MultiTouchViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+    <include
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        layout="@layout/photo_tabbar_layout" />
+
+    <RelativeLayout
+        android:id="@+id/rl_below"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:background="#2f2637" >
+
+        <RadioButton
+            android:id="@+id/rb_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:button="@drawable/photo_radiobtn_selector"
+            android:textColor="@android:color/white"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/tv_rawimage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/rb_image"
+            android:text="原图"
+            android:textColor="@android:color/white"
+            android:textSize="17dp"
+            android:visibility="gone"
+            />
+        <RelativeLayout
+            android:id="@+id/rl_show_select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            >
+            <TextView
+                android:id="@+id/tv_selected"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="3dp"
+                android:text="选择"
+                android:textColor="@android:color/white"
+                android:textSize="17dp" />
+
+            <ImageView
+                android:id="@+id/iv_select"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/tv_selected"
+                android:background="@drawable/photo_btn_select_selector"
+                android:textColor="@android:color/white" />
+
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

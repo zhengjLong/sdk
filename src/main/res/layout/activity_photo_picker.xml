@@ -1,0 +1,75 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    >
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        layout="@layout/photo_tabbar_layout" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#191919">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/photo_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+        </android.support.v7.widget.RecyclerView>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/bottom_tab_bar"
+                android:layout_width="match_parent"
+                android:layout_height="?android:attr/actionBarSize"
+                android:layout_alignParentBottom="true"
+                android:background="#BB000000">
+                <TextView
+                    android:id="@+id/floder_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/photo_floder_name_color_selector"
+                    android:textSize="16sp"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
+                    android:drawableRight="@drawable/photo_text_indicator_selector"
+                    android:text="全部图片"/>
+
+                <Button
+                    android:id="@+id/btn_preview"
+                    android:background="@drawable/photo_action_btn"
+                    android:minHeight="1dp"
+                    android:minWidth="1dp"
+                    android:text="预览"
+                    android:layout_marginRight="16dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:textColor="@color/photo_default_text_color"
+                    android:textSize="14sp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="wrap_content"
+                    android:visibility="gone"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+            <ViewStub
+                android:id="@+id/floder_stub"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout="@layout/photo_fload_list_layout_stub"
+                android:layout_above="@id/bottom_tab_bar"/>
+        </RelativeLayout>
+
+    </FrameLayout>
+</LinearLayout>
+

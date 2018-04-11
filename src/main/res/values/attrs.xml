@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="LockPatternView">
+        <!-- Aspect to use when drawing LockPatternView. Choices are "square"(default), "lock_width"
+             or "lock_height" -->
+        <attr name="aspect" format="string"/>
+    </declare-styleable>
+    <declare-styleable name="PlaceholderView">
+        <attr name="mode">
+            <enum name="empty" value="0"/>
+            <enum name="loading" value="1"/>
+        </attr>
+
+        <attr name="empty_icon" format="reference"/>
+        <attr name="empty_message" format="reference|string"/>
+    </declare-styleable>
+    <declare-styleable name="CircleImageView">
+        <attr name="border_width" format="dimension" />
+        <attr name="border_color" format="color" />
+    </declare-styleable>
+</resources>

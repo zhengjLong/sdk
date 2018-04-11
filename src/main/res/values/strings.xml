@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="photos_num">%1$d张</string>
+    <string name="network_error">网络错误</string>
+    <string name="error_web_page">网页发生错误</string>
+    <string name="loading">正在加载..</string>
+    <string name="hint_exit_back">再按一次返回</string>
+
+
+</resources>

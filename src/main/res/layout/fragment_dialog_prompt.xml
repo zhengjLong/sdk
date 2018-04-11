@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/container"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@drawable/bg_layout_dialog"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/rl_prompt_dialog_title"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/bg_layout_title">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/app_name"
+                android:textColor="@color/colorTextBold"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+
+
+            <View
+                android:layout_alignParentBottom="true"
+                android:layout_width="fill_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/colorDivider"/>
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/dialog_operate_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:layout_marginLeft="17dp"
+            android:layout_marginRight="17dp"
+            android:layout_marginTop="24dp"
+            android:gravity="center"
+            android:textColor="@color/colorTextStyle38"
+            android:textSize="14sp"
+            android:lineSpacingMultiplier="1.5"
+            android:text=""
+            android:visibility="gone"/>
+        <TextView
+            android:id="@+id/dialog_operate_content_v2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:textColor="@color/colorTextStyle89"
+            android:textSize="15sp"
+            android:text=""
+            android:lineSpacingMultiplier="1.5"
+            android:layout_marginLeft="28dp"
+            android:layout_marginBottom="20dp"
+            android:visibility="gone"
+            />
+
+        <EditText
+            android:id="@+id/dialog_operate_input"
+            android:layout_width="fill_parent"
+            android:layout_height="48dp"
+            android:layout_marginBottom="24dp"
+            android:layout_marginLeft="17dp"
+            android:layout_marginRight="17dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/bg_bottom_line"
+            android:textColor="#808080"
+            android:textSize="16sp"
+            android:visibility="gone"/>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/colorDivider"/>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/cancel_btn"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/bg_btn_dialog_left"
+                android:gravity="center"
+                android:text="取消"
+                android:textColor="@color/colorPrimary"
+                android:textSize="17sp"/>
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:background="@color/colorDivider"
+                />
+
+            <Button
+                android:id="@+id/ok_btn"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/bg_btn_dialog_right"
+                android:gravity="center"
+                android:text="确定"
+                android:textColor="@color/colorPrimary"
+                android:textSize="17sp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>
