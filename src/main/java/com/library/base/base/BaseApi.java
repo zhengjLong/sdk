@@ -8,6 +8,7 @@ import com.library.base.BuildConfig;
 import com.library.base.net.ApiResponseModel;
 import com.library.base.net.HttpCallback;
 import com.library.base.net.HttpEngine;
+import com.library.base.utils.Logcat;
 
 import java.lang.ref.WeakReference;
 import java.util.HashMap;

@@ -95,7 +95,7 @@ public class ImgDownLoadService extends IntentService {
         public void run() {
             File cacheFile = null;
             try {
-                Bitmap bmp = Glide.with(mContext).load(mUrl).asBitmap().into(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL).get();
+                Bitmap bmp = BitmapUtil.drawable2Bitmap(Glide.with(mContext).load(mUrl).into(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL).get());
                 if (bmp != null) {
                     // 在这里执行图片保存方法
                     BitmapUtil.savePicture(mDirName + mFileName + ".png", bmp);

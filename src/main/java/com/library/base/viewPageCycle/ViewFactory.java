@@ -1,12 +1,16 @@
 package com.library.base.viewPageCycle;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
 
-import com.bumptech.glide.DrawableTypeRequest;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.RequestBuilder;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.library.base.R;
@@ -42,28 +46,25 @@ public class ViewFactory {
         return imageView;
     }
 
-    public static void showImage(Context context, String url, ImageView view, final ImageLoaderListener listener) {
-        DrawableTypeRequest<String> loader = Glide.with(context).load(url);
+    @SuppressLint("CheckResult")
+    public static void showImage(Context context, final String url, ImageView view, final ImageLoaderListener listener) {
+        RequestBuilder<Drawable> loader = Glide.with(context).load(url);
         if (listener != null) {
-            loader.listener(new RequestListener<String, GlideDrawable>() {
+            loader.listener(new RequestListener<Drawable>() {
                 @Override
-                public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                     Logcat.INSTANCE.e("图片加载失败：" + model);
-                    listener.onImageLoaderFailed(model, e);
+                    listener.onImageLoaderFailed(url, e);
                     return false;
                 }
 
                 @Override
-                public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                    listener.onImageLoaderSuccess(model);
+                public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                    listener.onImageLoaderSuccess(url);
                     return false;
                 }
             });
         }
         loader.into(view);
-    }
-
-    public static void showImage(Context context, String url, ImageView view) {
-        showImage(context, url, view, null);
     }
 }
