@@ -91,13 +91,7 @@ public class UpdateVersionService extends Service {
         url = intent.getStringExtra("url");
         if (!TextUtils.isEmpty(url)) {
             // 调用下载
-            SdkUtil.getUserPermission(new SdkUtil.PermissionCallBack() {
-                @Override
-                public void isSuccess(boolean isSuccess) {
-                    if (isSuccess)
-                        initDownManager();
-                }
-            }, getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            initDownManager();
         }
         //意外杀死后，不再重启服务
         return START_NOT_STICKY;

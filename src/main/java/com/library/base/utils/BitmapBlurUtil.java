@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.view.View;
 
 
@@ -69,7 +70,9 @@ public class BitmapBlurUtil {
             Logcat.INSTANCE.e("fast blur error(result[overlay] is null)");
             return;
         }
-        view.setBackground(new BitmapDrawable(context.getResources(),overlay));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            view.setBackground(new BitmapDrawable(context.getResources(),overlay));
+        }
     }
 
 

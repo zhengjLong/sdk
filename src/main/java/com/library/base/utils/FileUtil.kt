@@ -22,33 +22,26 @@ object FileUtil {
 
 
     val PROJECT_FILE_PATH = Environment
-            .getExternalStorageDirectory().path + File.separator+ BuildConfig.APP_NAME+File.separator // 项目路径
+            .getExternalStorageDirectory().path + File.separator + BuildConfig.APP_NAME + File.separator // 项目路径
 
     val CHAT_DATA = PROJECT_FILE_PATH + "chatData.txt"
-
-
-
 
 
     /**
      * 初始化文件目录
      */
-    fun init(context: Context) {
-        SdkUtil.getUserPermission(SdkUtil.PermissionCallBack { isSuccess ->
-            if (isSuccess) {
-                val projectDir = File(PROJECT_FILE_PATH)
-                if (!projectDir.exists()) {
-                    projectDir.mkdirs()
-                }
-            }
-        }, context, Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    fun init() {
+        val projectDir = File(PROJECT_FILE_PATH)
+        if (!projectDir.exists()) {
+            projectDir.mkdirs()
+        }
     }
 
     /**
      * 保存对象为文件
      * @param object
      */
-    fun saveFile(`object`: Any,path :String): Boolean {
+    fun saveFile(`object`: Any, path: String): Boolean {
         var fos: FileOutputStream? = null
         var oos: ObjectOutputStream? = null
         val f = File(PROJECT_FILE_PATH)
@@ -141,11 +134,11 @@ object FileUtil {
     /**
      * 将一个InputStream里面的数据写入到SD卡中
      */
-    fun saveInputStream(path: String,  input: InputStream): File? {
+    fun saveInputStream(path: String, input: InputStream): File? {
         var file: File? = null
         var output: OutputStream? = null
         try {
-             file = File(PROJECT_FILE_PATH)
+            file = File(PROJECT_FILE_PATH)
             if (!file.exists()) {
                 file.mkdirs()
             }
@@ -233,7 +226,6 @@ object FileUtil {
         }
         return type
     }
-
 
 
     /**
@@ -346,7 +338,7 @@ object FileUtil {
                 }
                 cb.close()
             } catch (e: IOException) {
-                Logcat.e("close IO ERROR..."+e.message)
+                Logcat.e("close IO ERROR..." + e.message)
             }
 
         }

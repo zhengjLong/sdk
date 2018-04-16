@@ -101,9 +101,8 @@ public class TokenInterceptor implements Interceptor {
     /**
      * 同步刷新Token
      * @return
-     * @throws IOException
      */
-    private String refreshToken() throws IOException {
+    private String refreshToken(){
         SdkPreference p = SdkPreference.getInstance();
 
         String newToken = syncRefreshToken(p.getRefreshToken());
@@ -123,7 +122,7 @@ public class TokenInterceptor implements Interceptor {
      *
      * @param refreshToken 登录返回
      */
-    public String syncRefreshToken(String refreshToken) {
+    private String syncRefreshToken(String refreshToken) {
         ApiResponseModel data = BaseApi.getInstance(mContext).getRefreshToken(refreshToken);
         if (data == null || data.getData() == null) {
             return null;

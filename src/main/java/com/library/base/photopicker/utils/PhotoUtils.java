@@ -8,7 +8,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.WindowManager;
 
-import com.tbruyelle.rxpermissions.RxPermissions;
 
 import java.io.File;
 import java.io.FileDescriptor;

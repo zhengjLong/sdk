@@ -56,7 +56,7 @@ public class HttpEngine {
 
     private static String BASE_URL = BuildConfig.APP_BASE_RUL;//app短路径
     private String addInterceptor = BuildConfig.APP_ADD_INTERCEPTOR;//是否添加拦截器
-    private String addCookieUpdata = BuildConfig.APP_COOKIE_UPDATA;//是否自动更新cookie
+    private String addCookieUpdate = BuildConfig.APP_COOKIE_UPDATE;//是否自动更新cookie
     private String addCertificate = BuildConfig.APP_ADD_CERTIFICATE;//是否添加证书
     private String signParams = BuildConfig.APP_SIGN_PARAMS;//是否进行验签
     private String postKeyValue = BuildConfig.APP_POST_KEY_VALUE;//默认post键值对
@@ -102,7 +102,7 @@ public class HttpEngine {
      */
     private void addCookie(OkHttpClient.Builder builder) {
 
-        if ("0".equals(addCookieUpdata)) return;
+        if ("0".equals(addCookieUpdate)) return;
 
         builder.cookieJar(new CookieJar() {
 
@@ -143,7 +143,7 @@ public class HttpEngine {
         if ("1".equals(addInterceptor))
             builder.addInterceptor(new TokenInterceptor(mContext));
 
-        if ("1".equals(addCookieUpdata))
+        if ("1".equals(addCookieUpdate))
             builder.addInterceptor(new CookieInterceptor(mContext));
     }
 

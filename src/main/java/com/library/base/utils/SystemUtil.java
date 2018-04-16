@@ -1,6 +1,7 @@
 package com.library.base.utils;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.KeyguardManager;
 import android.content.ComponentName;
@@ -140,7 +141,7 @@ public class SystemUtil {
      *  添加权限<uses-permission android:name="android.permission.READ_PHONE_STATE"/>
      * @return "" & String
      */
-    public static void getDeviceIMEI(final Context context, final DataCallBack<String> callBack) {
+    public static void getDeviceIMEI(final Activity context, final DataCallBack<String> callBack) {
         SdkUtil.getUserPermission(new SdkUtil.PermissionCallBack() {
             @SuppressLint({"MissingPermission", "HardwareIds"})
             @Override

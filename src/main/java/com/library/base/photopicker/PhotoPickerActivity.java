@@ -420,7 +420,7 @@ public class PhotoPickerActivity extends AppCompatActivity implements PhotoRcyAd
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
-    public static void start(final Context context, final boolean isShowCamera, final String flag,
+    public static void start(final Activity context, final boolean isShowCamera, final String flag,
                              final int num,final int callBackType) {
         SdkUtil.getUserPermission(new SdkUtil.PermissionCallBack() {
             @Override

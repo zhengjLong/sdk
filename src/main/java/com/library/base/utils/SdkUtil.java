@@ -1,5 +1,6 @@
 package com.library.base.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,7 +15,7 @@ import com.library.base.photopicker.SelectPhotoTypeActivity;
 import com.library.base.viewPageCycle.Adverts;
 import com.library.base.viewPageCycle.CycleViewPager;
 import com.library.base.viewPageCycle.ViewFactory;
-import com.tbruyelle.rxpermissions.RxPermissions;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,6 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import io.reactivex.disposables.Disposable;
+import rx.Observer;
 import rx.functions.Action1;
 import top.zibin.luban.Luban;
 import top.zibin.luban.OnCompressListener;
@@ -44,7 +47,7 @@ public class SdkUtil {
     public static void initSdk(Context context) {
         SdkPreference.instance(context);
         HttpEngine.init(context);
-        FileUtil.INSTANCE.init(context);
+        FileUtil.INSTANCE.init();
         AndroidExceptionLog.init(context);
     }
 
@@ -125,7 +128,7 @@ public class SdkUtil {
      * if (event.selectMediaBeans != null) {}
      * }
      */
-    public static void selectPhotoEventBus(Context context, Boolean isShowCamera, int num, String tag) {
+    public static void selectPhotoEventBus(Activity context, Boolean isShowCamera, int num, String tag) {
         PhotoPickerActivity.start(context, isShowCamera, tag, num, PhotoPickerActivity.CALL_BACK_EVENT_BUS);
     }
 
@@ -150,7 +153,7 @@ public class SdkUtil {
      *                     Bus.unregister(this)
      *                     }
      */
-    public static void selectPhotoBus(Context context, Boolean isShowCamera, int num, String tag) {
+    public static void selectPhotoBus(Activity context, Boolean isShowCamera, int num, String tag) {
         PhotoPickerActivity.start(context, isShowCamera, tag, num, PhotoPickerActivity.CALL_BACK_BUS);
     }
 
@@ -252,14 +255,30 @@ public class SdkUtil {
      * @param permission 权限引用ID,edg:Manifest.permission.CAMERA
      * @return 权限是否可用
      */
-    public static void getUserPermission(final PermissionCallBack callBack, Context context, String... permission) {
+    public static void getUserPermission(final PermissionCallBack callBack, Activity context, final String... permission) {
         try {
-            RxPermissions.getInstance(context.getApplicationContext()).request(permission).subscribe(new Action1<Boolean>() {
+            RxPermissions rxPermissions = new RxPermissions(context);
+            rxPermissions.request(permission).subscribe(new io.reactivex.Observer<Boolean>() {
                 @Override
-                public void call(Boolean permission) {
-                    callBack.isSuccess(permission);
+                public void onSubscribe(Disposable d) {
+
+                }
+
+                @Override
+                public void onNext(Boolean aBoolean) {
+                    callBack.isSuccess(aBoolean);
+                }
+
+                @Override
+                public void onError(Throwable e) {
+
+                }
+
+                @Override
+                public void onComplete() {
                 }
             });
+
         } catch (Exception e) {
             e.printStackTrace();
             callBack.isSuccess(false);
