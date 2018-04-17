@@ -14,9 +14,8 @@ import com.library.base.utils.SdkPreference;
 import butterknife.ButterKnife;
 
 /**
- * @describe:
- * @author: jerome
- * @date: 2016/10/13 0013
+ * fragment 基类
+ * @author : jerome
  */
 public abstract class BaseFragment extends Fragment {
 

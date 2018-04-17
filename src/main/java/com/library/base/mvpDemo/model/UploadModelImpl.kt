@@ -5,8 +5,7 @@ import com.library.base.net.HttpCallback
 
 /**
  * 日志上传
- * @Author: jerome
- * @Date: 2018-01-30
+ * @author : jerome
  */
 
 class UploadModelImpl(context: Context) : BaseModelImpl(context) {

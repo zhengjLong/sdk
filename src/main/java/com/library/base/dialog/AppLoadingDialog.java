@@ -13,8 +13,7 @@ import com.library.base.R;
 
 /**
  * 加载中对话框
- * @Author: jerome
- * @Date: 2017-08-15
+ * @author : jerome
  */
 public class AppLoadingDialog extends AppDialog {
 
@@ -25,12 +24,16 @@ public class AppLoadingDialog extends AppDialog {
     public AppLoadingDialog(Context context) {
         super(context, R.style.AppDialog_Loading); // 不要主题
         setContentView(R.layout.fragment_dialog_loading);
-        mContentView = (TextView) findViewById(R.id.tv_loading);
-        mIconView = (ImageView) findViewById(R.id.img_loading_dialog_icon);
+        mContentView = findViewById(R.id.tv_loading);
+        mIconView = findViewById(R.id.img_loading_dialog_icon);
         mProgressView = findViewById(R.id.pb_loading_dialog);
         dismiss();
     }
 
+    /**
+     * 设置加载框提示内容
+     * @param msg
+     */
     public void setMessage(CharSequence msg) {
         if (TextUtils.isEmpty(msg)) {
             mContentView.setVisibility(View.GONE);
@@ -60,6 +63,10 @@ public class AppLoadingDialog extends AppDialog {
         mIconView.setImageResource(resId);
     }
 
+    /**
+     * 延时自动关闭加载框
+     * @param autoDismiss
+     */
     public void setAutoDismiss(int autoDismiss) {
         mContentView.postDelayed(new Runnable() {
             @Override
@@ -69,6 +76,9 @@ public class AppLoadingDialog extends AppDialog {
         }, autoDismiss);
     }
 
+    /**
+     * 显示加载效果
+     */
     public void loading() {
         mProgressView.setVisibility(View.VISIBLE);
         mIconView.setVisibility(View.GONE);

@@ -71,10 +71,10 @@ public class PhotoPreviewActivity extends AppCompatActivity {
     }
 
     private void setupUI() {
-        ivSelect = (ImageView) findViewById(R.id.iv_select);
-        tv_num = (TextView) findViewById(R.id.tv_num);
+        ivSelect = findViewById(R.id.iv_select);
+        tv_num = findViewById(R.id.tv_num);
         rl_show_select =  findViewById(R.id.rl_show_select);
-        commitBtn = (Button) findViewById(R.id.commit);
+        commitBtn = findViewById(R.id.commit);
         findViewById(R.id.btn_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,7 +103,7 @@ public class PhotoPreviewActivity extends AppCompatActivity {
             }
         });
 
-        viewPager = (MultiTouchViewPager) findViewById(R.id.viewpager);
+        viewPager = findViewById(R.id.viewpager);
         if(type==TYPE_CAMERA){
             rl_show_select.setVisibility(View.GONE);
             MediaBean bean=new MediaBean(cameraPhotoPath);

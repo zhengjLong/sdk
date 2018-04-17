@@ -7,8 +7,8 @@ import com.library.base.utils.SdkPreference;
 
 
 /**
- * @Author: jerome
- * @Date: 2018-01-30
+ * model 基类
+ * @author : jerome
  */
 
 public class BaseModelImpl {
@@ -23,6 +23,10 @@ public class BaseModelImpl {
         mPreferenceUtils = SdkPreference.getInstance();
     }
 
+    /**
+     * 提供api请求实例
+     * @return
+     */
     protected BaseApi getApi() {
         if (mApi == null) {
             mApi = BaseApi.getInstance(mContext);

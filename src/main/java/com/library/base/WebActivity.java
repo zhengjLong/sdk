@@ -37,6 +37,9 @@ import com.library.base.mvpDemo.view.IBaseView;
 import com.library.base.view.PlaceholderView;
 
 
+/**
+ * web加载页面
+ */
 public class WebActivity extends BasePresenterActivity implements IBaseView {
 
     public static final String PARAM_TITLE = "title";
@@ -85,8 +88,6 @@ public class WebActivity extends BasePresenterActivity implements IBaseView {
         } else {
             url = intent.getStringExtra(PARAM_URL);
         }
-
-//        url = "http://192.168.210.78:8080/UserContract.html";
 //        mPlaceholderView.dismiss();
         mPlaceholderView.setOnRetryClickListener(new View.OnClickListener() {
             @Override

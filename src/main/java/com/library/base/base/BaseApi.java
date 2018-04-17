@@ -16,6 +16,7 @@ import java.util.Map;
 
 /**
  * 请求Api类
+ * @author jerome
  */
 public class BaseApi {
 
@@ -31,7 +32,7 @@ public class BaseApi {
     private static WeakReference<BaseApi> instance;
     private final Context mContext;
 
-    public BaseApi(Context context, Handler handler) {
+    private BaseApi(Context context, Handler handler) {
         mContext = context.getApplicationContext();
         httpEngine = HttpEngine.getInstance(context);
         httpEngine.setHandler(handler);
@@ -67,7 +68,7 @@ public class BaseApi {
         httpEngine.post(uploadErrorData, paramMap, String.class, callback);
     }
     /**
-     * 获得刷新token
+     * 同步获得刷新token
      */
     public ApiResponseModel getRefreshToken(String refreshToken) {
         Map<String, String> params = new HashMap<>();

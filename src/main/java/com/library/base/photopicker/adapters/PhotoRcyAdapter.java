@@ -22,6 +22,10 @@ import java.io.File;
 import java.util.List;
 
 
+/**
+ * 图片列表预览适配器
+ * @author jerome
+ */
 public class PhotoRcyAdapter extends RecyclerView.Adapter {
     private static final int TYPE_CAMERA = 0;
     private static final int TYPE_PHOTO = 1;
@@ -179,10 +183,10 @@ public class PhotoRcyAdapter extends RecyclerView.Adapter {
 
         PhotoHolder(View itemView) {
             super(itemView);
-            photoImageView = (ImageView) itemView.findViewById(R.id.imageview_photo);
-            selectView = (ImageView) itemView.findViewById(R.id.checkmark);
+            photoImageView = itemView.findViewById(R.id.imageview_photo);
+            selectView = itemView.findViewById(R.id.checkmark);
             maskView = itemView.findViewById(R.id.mask);
-            wrapLayout = (FrameLayout) itemView.findViewById(R.id.wrap_layout);
+            wrapLayout = itemView.findViewById(R.id.wrap_layout);
         }
     }
 
@@ -193,8 +197,18 @@ public class PhotoRcyAdapter extends RecyclerView.Adapter {
     }
 
     public interface PhotoSelectListener {
+
+        /**
+         * 选中监听回调
+         * @param index
+         * @param ImageId
+         * @param isSelect
+         */
         void photoSelectChange(int index, int ImageId, boolean isSelect);
 
+        /**
+         * 跳转至摄像机
+         */
         void gotoCamera();
     }
 }

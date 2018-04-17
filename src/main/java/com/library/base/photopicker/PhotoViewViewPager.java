@@ -6,9 +6,8 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 
 /**
- * 重写onInterceptTouchEvent解决photoview 缩放奔溃问题
- * @Author jerome
- * @Date 2017/5/17
+ * 重写onInterceptTouchEvent解决photoView 缩放奔溃问题
+ * @author : jerome
  */
 
 public class PhotoViewViewPager extends ViewPager {

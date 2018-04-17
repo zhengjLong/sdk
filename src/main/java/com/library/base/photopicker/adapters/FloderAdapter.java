@@ -54,10 +54,10 @@ public class FloderAdapter extends BaseAdapter {
             holder = new ViewHolder();
             convertView = LayoutInflater.from(mContext).inflate(
                     R.layout.photo_item_floder_layout, null);
-            holder.photoIV = (ImageView) convertView.findViewById(R.id.imageview_floder_img);
-            holder.floderNameTV = (TextView) convertView.findViewById(R.id.textview_floder_name);
-            holder.photoNumTV = (TextView) convertView.findViewById(R.id.textview_photo_num);
-            holder.selectIV = (ImageView) convertView.findViewById(R.id.imageview_floder_select);
+            holder.photoIV = convertView.findViewById(R.id.imageview_floder_img);
+            holder.floderNameTV = convertView.findViewById(R.id.textview_floder_name);
+            holder.photoNumTV = convertView.findViewById(R.id.textview_photo_num);
+            holder.selectIV = convertView.findViewById(R.id.imageview_floder_select);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -69,7 +69,7 @@ public class FloderAdapter extends BaseAdapter {
             holder.selectIV.setVisibility(View.VISIBLE);
         }
         holder.floderNameTV.setText(floder.getName());
-        holder.photoNumTV.setText(floder.getMediaBeanList().size() + "张");
+        holder.photoNumTV.setText(String.format("%d张", floder.getMediaBeanList().size()));
         if (floder.getMediaBeanList().size() > 0) {
             holder.photoIV.getLayoutParams().width = holder.photoIV.getLayoutParams().height = mWidth;
             GlideDisplay.display(holder.photoIV, new File(floder.getMediaBeanList().get(0).getRealPath()));

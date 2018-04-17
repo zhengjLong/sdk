@@ -20,6 +20,9 @@ import java.util.regex.Pattern;
 import rx.functions.Action1;
 
 
+/**
+ * 图片选择器所需工具类
+ */
 public class PhotoUtils {
 
     /**

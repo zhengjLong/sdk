@@ -24,7 +24,6 @@ import java.util.List;
 /**
  * 基类
  * @author : jerome
- * @version : 2018-01-30
  */
 
 public abstract class BaseActivity extends AppCompatActivity implements IBaseView {

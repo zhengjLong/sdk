@@ -12,9 +12,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * @describe:
- * @author: zhengjl
- * @date: 2016/9/20 0020
+ * 信息提示对话框
+ * @author : jerome
  */
 public class PromptDialog extends BaseDialog {
 
@@ -51,13 +50,13 @@ public class PromptDialog extends BaseDialog {
 
     @Override
     protected void initDialog() {
-        okBtn = (Button) findViewById(R.id.ok_btn);
+        okBtn = findViewById(R.id.ok_btn);
         cancelBtn = findViewById(R.id.cancel_btn);
-        contentView = (TextView) findViewById(R.id.dialog_operate_content);
-        contentViewV2 = (TextView) findViewById(R.id.dialog_operate_content_v2);
+        contentView = findViewById(R.id.dialog_operate_content);
+        contentViewV2 = findViewById(R.id.dialog_operate_content_v2);
 
-        inputView = (EditText) findViewById(R.id.dialog_operate_input);
-        title = (TextView) findViewById(R.id.title);
+        inputView = findViewById(R.id.dialog_operate_input);
+        title = findViewById(R.id.title);
         titleLayout = findViewById(R.id.rl_prompt_dialog_title);
         divider = findViewById(R.id.divider);
         setTitle("提示");
@@ -115,6 +114,10 @@ public class PromptDialog extends BaseDialog {
         }
     }
 
+    /**
+     * 规则校验
+     * @return
+     */
     private boolean isFalse() {
         if (mustNumber || mustLetter) {
             String txt = inputView.getText().toString().trim();
@@ -144,20 +147,36 @@ public class PromptDialog extends BaseDialog {
         return false;
     }
 
+    /**
+     * 清空输入框
+     */
     public void cleanInput() {
         inputView.setText("");
     }
 
+    /**
+     * 输入框显示内容
+     * @param content
+     */
     public void setInputContent(String content) {
         if (content == null) return;
         inputView.setText(content);
         inputView.setSelection(content.length());
     }
 
+    /**
+     * 确定按扭提示文字
+     * @param text
+     */
     public void setOkText(String text) {
         okBtn.setText(text);
     }
 
+
+    /**
+     * 取消按扭提示文字
+     * @param text
+     */
     public void setCancelBtn(String text) {
         try {
             Button cancle = (Button) cancelBtn;
@@ -167,6 +186,10 @@ public class PromptDialog extends BaseDialog {
         }
     }
 
+    /**
+     * 是否显示取消按钮
+     * @param visible
+     */
     public void setCancelButtonVisible(boolean visible) {
         if (visible) {
             cancelBtn.setVisibility(View.VISIBLE);
@@ -177,6 +200,10 @@ public class PromptDialog extends BaseDialog {
         okBtn.setBackgroundResource(R.drawable.bg_btn_dialog_left_right);
     }
 
+    /**
+     * 是否显示确定按扭
+     * @param visible
+     */
     public void setOKVisible(boolean visible) {
         okBtn.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
@@ -199,9 +226,10 @@ public class PromptDialog extends BaseDialog {
     }
 
     /**
-     * @param mustNumber
-     * @param mustLetter
-     * @param maxNumber
+     * 设置输入框的规制
+     * @param mustNumber 是否只能输入数字
+     * @param mustLetter 是否只能输入字母
+     * @param maxNumber  输入的最长字符
      */
     public void setInputType(boolean mustNumber, boolean mustLetter, int maxNumber, int minNumber) {
         this.mustNumber = mustNumber;
@@ -210,6 +238,10 @@ public class PromptDialog extends BaseDialog {
         this.minNumber = minNumber;
     }
 
+    /**
+     * 设置提示内容
+     * @param text
+     */
     public void setContent(String text) {
         contentView.setText(text);
     }
@@ -219,10 +251,18 @@ public class PromptDialog extends BaseDialog {
         contentViewV2.setText(text);
     }
 
+    /**
+     * 显示内容的位置
+     * @param gravity
+     */
     public void setContentGravity(int gravity) {
         contentView.setGravity(gravity);
     }
 
+    /**
+     * 标题文字
+     * @param text
+     */
     public void setTitle(String text) {
         title.setText(text);
     }

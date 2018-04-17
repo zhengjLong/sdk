@@ -10,8 +10,7 @@ import com.library.base.R;
 
 /**
  * 普通弹出基类
- * @Author: jerome
- * @Date: 2017-08-15
+ * @author : jerome
  */
 public class AppDialog extends Dialog {
 

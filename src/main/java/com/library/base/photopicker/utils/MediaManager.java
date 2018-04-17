@@ -23,6 +23,9 @@ import java.util.List;
 import java.util.Map;
 
 
+/**
+ * 图片选择器管理类
+ */
 public class MediaManager {
     private Uri imageUri;
     private Uri thumbnailImageUri;

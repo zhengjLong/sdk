@@ -18,14 +18,18 @@ import java.lang.ref.WeakReference;
 
 /**
  * 加载中对话框快速创建
- * @Author: jerome
- * @Date: 2017-08-15
+ * @author : jerome
  */
 public final class LoadingDialog {
 
     // 使用弱引用
     private static WeakReference<AppLoadingDialog> sInstance;
 
+    /**
+     * 获得对话框实例
+     * @param context
+     * @return
+     */
     private static AppLoadingDialog build(Context context) {
         AppLoadingDialog dialog;// 同一个处理
         if (sInstance != null && sInstance.get() != null) {
@@ -46,6 +50,12 @@ public final class LoadingDialog {
         return dialog;
     }
 
+    /**
+     * 显示加载对话框
+     * @param context
+     * @param msg
+     * @return
+     */
     public static AppLoadingDialog show(Context context, String msg) {
         AppLoadingDialog dialog = build(context);
         if (!TextUtils.isEmpty(msg)) {
@@ -56,6 +66,11 @@ public final class LoadingDialog {
         return dialog;
     }
 
+    /**
+     * 显示默认加载对话框
+     * @param context
+     * @return
+     */
     public static AppLoadingDialog show(Context context) {
         AppLoadingDialog dialog = show(context, context.getString(R.string.loading));
         if (dialog != null) {
@@ -66,14 +81,32 @@ public final class LoadingDialog {
     }
 
 
+    /**
+     * 显示短暂成功提示
+     * @param context
+     * @param msg
+     * @return
+     */
     public static Toast success(Context context, String msg) {
         return toast(context, msg, R.mipmap.ic_success);
     }
 
+    /**
+     * 显示短暂失败的错误提示
+     * @param context
+     * @param msg
+     * @return
+     */
     public static Toast failed(Context context, String msg) {
         return toast(context, msg, R.mipmap.ic_failed);
     }
 
+    /**
+     * toast 提示
+     * @param context
+     * @param msg
+     * @return
+     */
     public static Toast toast(Context context, String msg) {
         Toast toast = Toast.makeText(context, msg, Toast.LENGTH_SHORT);
         toast.getView().setBackgroundResource(R.drawable.bg_default_toast);
@@ -85,9 +118,9 @@ public final class LoadingDialog {
         Toast toast = Toast.makeText(context, msg, Toast.LENGTH_SHORT);
         View view = LayoutInflater.from(context).inflate(R.layout.fragment_dialog_loading, null);
         view.findViewById(R.id.pb_loading_dialog).setVisibility(View.GONE);
-        ImageView imgView = (ImageView) view.findViewById(R.id.img_loading_dialog_icon);
+        ImageView imgView = view.findViewById(R.id.img_loading_dialog_icon);
         imgView.setVisibility(View.VISIBLE);
-        TextView msgView = (TextView) view.findViewById(R.id.tv_loading);
+        TextView msgView = view.findViewById(R.id.tv_loading);
         imgView.setImageResource(icon);
         msgView.setText(msg);
         toast.setGravity(Gravity.CENTER, 0, 0);
@@ -172,6 +205,9 @@ public final class LoadingDialog {
     }
 
 
+    /**
+     * 安全关闭对话框
+     */
     public static void dismiss() {
         if (sInstance != null && sInstance.get() != null) {
             sInstance.get().dismiss();

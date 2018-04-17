@@ -1,5 +1,6 @@
 package com.library.base.dialog;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.util.DisplayMetrics;
@@ -11,15 +12,13 @@ import com.library.base.R;
 import butterknife.ButterKnife;
 
 /**
- * @describe:
- * @author: zhengjl
- * @date: 2016/9/20 0020
+ * 基本对话框
+ * @author : jerome
  */
 public abstract class BaseDialog extends Dialog implements View.OnClickListener {
 
     private Context context;
     public CallBack callBack;
-    public final String TAG = "msg";
     private Toast mToast;
 
 
@@ -29,7 +28,6 @@ public abstract class BaseDialog extends Dialog implements View.OnClickListener 
         this.setCanceledOnTouchOutside(true);
         setContentView(dialogLayout);
         ButterKnife.bind(this);
-        DisplayMetrics dm = new DisplayMetrics();
         initDialog();
         setListener();
     }
@@ -49,6 +47,7 @@ public abstract class BaseDialog extends Dialog implements View.OnClickListener 
      *
      * @param resId
      */
+    @SuppressLint("ShowToast")
     public void showToast(int resId) {
         if (mToast == null) {
             mToast = Toast.makeText(context, resId, Toast.LENGTH_SHORT);
@@ -63,6 +62,7 @@ public abstract class BaseDialog extends Dialog implements View.OnClickListener 
      *
      * @param content
      */
+    @SuppressLint("ShowToast")
     public void showToast(String content) {
         if (mToast == null) {
             mToast = Toast.makeText(context, content, Toast.LENGTH_SHORT);
@@ -76,6 +76,9 @@ public abstract class BaseDialog extends Dialog implements View.OnClickListener 
         this.callBack = callBack;
     }
 
+    /**
+     * 用户选择回调
+     */
     public interface CallBack {
         void callBack(Object returnData);
 

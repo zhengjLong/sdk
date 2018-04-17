@@ -32,8 +32,7 @@ import uk.co.senab.photoview.PhotoViewAttacher;
 /**
  * 本地图片，网络图片单张多张显示
  *
- * @Author jerome
- * @Date 2017/5/17
+ * @author : jerome
  * Bundle:
  * bundle.putStringArray("imagePaths");
  * bundle.putInt("position");初始化图片位置

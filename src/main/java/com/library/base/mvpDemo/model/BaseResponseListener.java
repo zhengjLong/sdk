@@ -2,9 +2,7 @@ package com.library.base.mvpDemo.model;
 
 /**
  * 数据返回
- *
- * @Author: jerome
- * @Date: 2018-01-30
+ * @author : jerome
  */
 public interface BaseResponseListener<T> {
 

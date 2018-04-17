@@ -52,11 +52,9 @@ import java.util.Set;
 
 
 /**
- * @Description: 照片选择界面
+ *  照片选择界面
  */
 public class PhotoPickerActivity extends AppCompatActivity implements PhotoRcyAdapter.PhotoSelectListener{
-
-    public final static String TAG = "PhotoPickerActivity";
 
     public final static String KEY_RESULT = "picker_result";
     public final static String TAG_PHOTO = "photo";
@@ -124,9 +122,9 @@ public class PhotoPickerActivity extends AppCompatActivity implements PhotoRcyAd
     }
 
     private void initView() {
-        recyclerView = (RecyclerView) findViewById(R.id.photo_recyclerview);
-        previewBtn = (TextView) findViewById(R.id.btn_preview);
-        mCommitBtn = (Button) findViewById(R.id.commit);
+        recyclerView = findViewById(R.id.photo_recyclerview);
+        previewBtn = findViewById(R.id.btn_preview);
+        mCommitBtn = findViewById(R.id.commit);
         mCommitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -144,15 +142,15 @@ public class PhotoPickerActivity extends AppCompatActivity implements PhotoRcyAd
                 }
             }
         });
-        mPhotoNameTV = (TextView) findViewById(R.id.floder_name);
-        ((RelativeLayout) findViewById(R.id.bottom_tab_bar)).setOnTouchListener(new View.OnTouchListener() {
+        mPhotoNameTV = findViewById(R.id.floder_name);
+        findViewById(R.id.bottom_tab_bar).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 //消费触摸事件，防止触摸底部tab栏也会选中图片
                 return true;
             }
         });
-        ((ImageView) findViewById(R.id.btn_back)).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.btn_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();

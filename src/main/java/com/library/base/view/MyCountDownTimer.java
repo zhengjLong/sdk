@@ -9,9 +9,7 @@ import android.widget.Button;
  */
 public class MyCountDownTimer extends CountDownTimer {
 
-    /**
-     * @Fields count : 倒计时
-     */
+//     倒计时
     private static int count = 60 * 1000;
     private static int countDownInterval = 1000;
 

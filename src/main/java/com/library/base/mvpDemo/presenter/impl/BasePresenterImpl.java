@@ -11,8 +11,7 @@ import java.util.List;
 
 /**
  *逻辑处理基类
- * @Author: jerome
- * @Date: 2018-01-30
+ * @author : jerome
  */
 public class BasePresenterImpl<V> {
 
@@ -56,6 +55,10 @@ public class BasePresenterImpl<V> {
                 weakRefView.get() != null;
     }
 
+    /**
+     * 提供api请求实例
+     * @return
+     */
     protected BaseApi getApi() {
         if (mApi == null) {
             mApi = BaseApi.getInstance(mContext);
@@ -63,10 +66,21 @@ public class BasePresenterImpl<V> {
         return mApi;
     }
 
+    /**
+     * 文本是否为空
+     * @param val
+     * @return
+     */
     protected boolean isEmpty(String val) {
-        return val == null || TextUtils.isEmpty(val.trim());
+        return val == null || TextUtils.isEmpty(val.trim()) || "null".equals(val);
     }
 
+    /**
+     * 集合是否为空
+     * @param data
+     * @param <T>
+     * @return
+     */
     protected <T> boolean isEmpty(List<T> data) {
         return data == null || data.isEmpty();
     }

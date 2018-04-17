@@ -32,6 +32,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 
+/**
+ * 显示选择拍照或图片对话框
+ */
 public class SelectPhotoTypeActivity extends FragmentActivity implements View.OnClickListener {
     public static final int REQUEST_CODE_FROM_CAMERA = 150;
     public static final int REQUEST_CODE_FROM_ALBUM = 151;
@@ -53,9 +56,9 @@ public class SelectPhotoTypeActivity extends FragmentActivity implements View.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo_dialog);
-        TextView takePhoto = (TextView) findViewById(R.id.photo_tv_goto_camera);
-        TextView select = (TextView) findViewById(R.id.photo_tv_goto_album);
-        TextView cancle = (TextView) findViewById(R.id.photo_tv_cancel);
+        TextView takePhoto = findViewById(R.id.photo_tv_goto_camera);
+        TextView select = findViewById(R.id.photo_tv_goto_album);
+        TextView cancle = findViewById(R.id.photo_tv_cancel);
         takePhoto.setOnClickListener(this);
         select.setOnClickListener(this);
         cancle.setOnClickListener(this);

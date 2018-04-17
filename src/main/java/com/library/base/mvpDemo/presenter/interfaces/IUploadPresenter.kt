@@ -6,8 +6,7 @@ import com.library.base.mvpDemo.view.IBaseView
 /**
  * 上传日志
  *
- * @Author: jerome
- * @Date: 2018-01-30
+ * @author : jerome
  */
 
 interface IUploadPresenter : IBasePresenter {

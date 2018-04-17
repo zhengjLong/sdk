@@ -6,6 +6,9 @@ import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
+/**
+ * 多张图片查看viewPage
+ */
 public class MultiTouchViewPager extends ViewPager {
 
     public MultiTouchViewPager(Context context) {

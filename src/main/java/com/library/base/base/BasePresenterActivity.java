@@ -24,9 +24,8 @@ import java.util.List;
 
 
 /**
- * activity基类
- * @Author: jerome
- * @Date: 2017-08-07
+ * mvp模式下activity基类，用于同步activity与presenter的生命周期
+ * @author : jerome
  * */
 public abstract class BasePresenterActivity<V,P extends BasePresenterImpl<V>> extends AppCompatActivity implements IBaseView {
 
@@ -46,14 +45,18 @@ public abstract class BasePresenterActivity<V,P extends BasePresenterImpl<V>> ex
         handler = new Handler(Looper.getMainLooper());
         setContentView(setLayoutId());
 
+//        初始化presenter
         mPresenter = createPresenter();
         if (null != mPresenter)
         mPresenter.attach((V)this);
 
+//        初化toolbar
         if (null != initToolBar()) {
             setSupportActionBar(initToolBar());
             initActionBar();
         }
+
+//        子类实现方法
         initData();
     }
 
@@ -64,6 +67,10 @@ public abstract class BasePresenterActivity<V,P extends BasePresenterImpl<V>> ex
         mPresenter.detach();
     }
 
+    /**
+     * 子类实例化presenter可传null
+     * @return
+     */
     public abstract P createPresenter();
 
     @Override
@@ -77,6 +84,10 @@ public abstract class BasePresenterActivity<V,P extends BasePresenterImpl<V>> ex
         }
     }
 
+    /**
+     * 主线程handler
+     * @return
+     */
     public Handler getHandler() {
         return handler;
     }
@@ -151,7 +162,7 @@ public abstract class BasePresenterActivity<V,P extends BasePresenterImpl<V>> ex
     }
 
     /**
-     * fragmentClass在需求时进得初始化
+     * fragmentClass在未创建时进行初始化
      */
     protected void replaceFragment(int containerViewId, String tag, Class fragmentClass, Bundle args) {
         boolean isAdd = true;

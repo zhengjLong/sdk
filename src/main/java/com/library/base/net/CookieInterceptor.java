@@ -22,7 +22,6 @@ import okio.BufferedSource;
 /**
  * Cookie 续期拦截器
  * @author : jerome
- * @version : 2018-04-11
  */
 
 public class CookieInterceptor implements Interceptor {

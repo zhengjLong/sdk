@@ -7,8 +7,7 @@ import com.library.base.mvpDemo.presenter.interfaces.IUploadPresenter
 
 /**
  * 上传日志
- * @Author: jerome
- * @Date: 2018-01-30
+ * @author : jerome
  */
 
 class UploadPresenterImpl(context: Context) : BasePresenterImpl<IUploadPresenter.IPayView>(context), IUploadPresenter {

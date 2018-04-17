@@ -4,9 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 /**
  * 公共返回
- *
- * @Author: jerome
- * @Date: 2017-09-20
+ * @author : jerome
  */
 public class ApiResponseModel<T> {
     @SerializedName("msg")

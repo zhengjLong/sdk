@@ -18,7 +18,6 @@ import com.library.base.R;
 
 /**
  * Loading and Empty view
- * Created by ChenRui on 2016/11/10 0010 14:28.
  */
 public class PlaceholderView extends FrameLayout {
 

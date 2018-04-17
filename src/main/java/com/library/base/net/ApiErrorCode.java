@@ -2,9 +2,7 @@ package com.library.base.net;
 
 /**
  * 错误代码
- *
  * @author : jerome
- * @version  : 2017-09-20
  */
 public enum ApiErrorCode {
 
@@ -26,6 +24,11 @@ public enum ApiErrorCode {
         this.message = msg;
     }
 
+    /**
+     * 根据错误码获得对应实例
+     * @param errorCode
+     * @return
+     */
     public ApiErrorCode valueOf(int errorCode) {
         ApiErrorCode[] values = ApiErrorCode.values();
         for (ApiErrorCode val : values) {
@@ -36,10 +39,18 @@ public enum ApiErrorCode {
         return ERROR_UNKNOWN;
     }
 
+    /**
+     * 错误码
+     * @return
+     */
     public int getErrorCode() {
         return errorCode;
     }
 
+    /**
+     * 错误信息
+     * @return
+     */
     public String getMessage() {
         return message;
     }

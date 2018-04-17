@@ -10,8 +10,7 @@ import java.util.concurrent.TimeUnit
 
 /**
  * 异步执行池
- * @Author: jerome
- * @Date: 2017-08-07
+ * @author : jerome
  */
 
  object JobExecutor : ThreadExecutor {
@@ -31,6 +30,9 @@ import java.util.concurrent.TimeUnit
                 KEEP_ALIVE_TIME, KEEP_ALIVE_TIME_UNIT, workQueue, threadFactory)
     }
 
+    /**
+     * 开启一条线程
+     */
     override fun execute(runnable: Runnable) {
         mThreadPoolExecutor.execute(runnable)
     }
