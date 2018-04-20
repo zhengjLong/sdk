@@ -23,8 +23,7 @@ import uk.co.senab.photoview.PhotoViewAttacher;
 /**
  * 单张多张本地网络图片的显示
  *
- * @Author jerome
- * @Date 2017/5/17
+ * @author : jerome
  */
 public class DisplayPhotoAdapter extends PagerAdapter {
 
