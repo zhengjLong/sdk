@@ -156,7 +156,7 @@ public class SystemUtil {
                                 Settings.Secure.ANDROID_ID));
                     }
                 }else {
-                    callBack.callBack("");
+                    callBack.callBack(android.os.Build.SERIAL);//对于没有通话功能的设备，它会返回一个唯一的device ID
                 }
             }
         },context,android.Manifest.permission.READ_PHONE_STATE);
