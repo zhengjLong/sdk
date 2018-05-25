@@ -108,14 +108,14 @@ public final class LoadingDialog {
      * @return
      */
     public static Toast toast(Context context, String msg) {
-        Toast toast = Toast.makeText(context, msg, Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(context.getApplicationContext(), msg, Toast.LENGTH_SHORT);
         toast.getView().setBackgroundResource(R.drawable.bg_default_toast);
         toast.show();
         return toast;
     }
 
     public static Toast toast(Context context, String msg, int icon) {
-        Toast toast = Toast.makeText(context, msg, Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(context.getApplicationContext(), msg, Toast.LENGTH_SHORT);
         View view = LayoutInflater.from(context).inflate(R.layout.fragment_dialog_loading, null);
         view.findViewById(R.id.pb_loading_dialog).setVisibility(View.GONE);
         ImageView imgView = view.findViewById(R.id.img_loading_dialog_icon);
