@@ -132,6 +132,48 @@ public class DateUtil {
         }
         return ret;
     }
+    
+       /**
+     * 获得当前日期为星期几
+     * @param pTime
+     * @return
+     */
+    public static String getWeek(String pTime,String dateType) {
+
+        String Week = "星期";
+
+        SimpleDateFormat format = new SimpleDateFormat(dateType);
+        Calendar c = Calendar.getInstance();
+        try {
+
+            c.setTime(format.parse(pTime));
+
+            if (c.get(Calendar.DAY_OF_WEEK) == 1) {
+                Week += "天";
+            }
+            if (c.get(Calendar.DAY_OF_WEEK) == 2) {
+                Week += "一";
+            }
+            if (c.get(Calendar.DAY_OF_WEEK) == 3) {
+                Week += "二";
+            }
+            if (c.get(Calendar.DAY_OF_WEEK) == 4) {
+                Week += "三";
+            }
+            if (c.get(Calendar.DAY_OF_WEEK) == 5) {
+                Week += "四";
+            }
+            if (c.get(Calendar.DAY_OF_WEEK) == 6) {
+                Week += "五";
+            }
+            if (c.get(Calendar.DAY_OF_WEEK) == 7) {
+                Week += "六";
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return Week;
+    }
 
     public static boolean isCloseEnough(long var0, long var2) {
         long var4 = var0 - var2;
