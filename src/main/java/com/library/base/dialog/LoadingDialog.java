@@ -107,9 +107,11 @@ public final class LoadingDialog {
      * @param msg
      * @return
      */
-    public static Toast toast(Context context, String msg) {
+      public static Toast toast(Context context, String msg) {
         Toast toast = Toast.makeText(context.getApplicationContext(), msg, Toast.LENGTH_SHORT);
         toast.getView().setBackgroundResource(R.drawable.bg_default_toast);
+        TextView v = toast.getView().findViewById(android.R.id.message);
+        v.setTextColor(Color.WHITE);
         toast.show();
         return toast;
     }
