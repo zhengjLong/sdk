@@ -121,4 +121,22 @@ public class Base64Util {
             i += 4;
         }
     }
+    
+      /**
+     * 编码字符串
+     * @param value
+     * @return
+     */
+    public static String encodeString(String value) {
+        return Base64.encodeToString(value.getBytes(), Base64.DEFAULT);
+    }
+
+    /**
+     * 解码字符串
+     * @param value
+     * @return
+     */
+    public static String decodeString(String value) {
+        return new String(Base64.decode(value, Base64.DEFAULT));
+    }
 }
