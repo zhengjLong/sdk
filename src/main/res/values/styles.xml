@@ -62,4 +62,23 @@
         <item name="android:progressDrawable">@drawable/progress_web_view</item>
         <item name="android:minHeight">2dp</item>
     </style>
+      <!--分割线-->
+    <style name="AppDivider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0.5dp</item>
+        <item name="android:background">@color/colorDivider</item>
+    </style>
+
+    <!--首页radioButton-->
+    <style name="RadioButtonStyle">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_weight">1.0</item>
+        <item name="android:background">@null</item>
+        <item name="android:button">@null</item>
+        <item name="android:gravity">center</item>
+        <item name="android:drawablePadding">-4dp</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textSize">20sp</item>
+    </style>
 </resources>
