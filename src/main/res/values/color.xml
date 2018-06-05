@@ -14,6 +14,7 @@
     <color name="colorStroke73">#6b6b73</color>
     <color name="colorGrayF0">#f0f0f0</color>
     <color name="colorDisable">#FFCDCDCE</color>
+    <color name="half_transparent">#80000000</color>
 
 
 
