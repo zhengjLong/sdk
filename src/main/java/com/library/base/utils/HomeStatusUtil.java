@@ -79,7 +79,7 @@ public class HomeStatusUtil {
         };
     }
 
-    interface CallBack{
+    public interface CallBack{
         void leaveApp();
     }
 
