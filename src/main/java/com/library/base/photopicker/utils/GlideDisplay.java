@@ -12,7 +12,7 @@ import java.io.File;
 
 
 /**
- * 图片加载
+ * 图片加载,加载的图片不能设置缩放类型
  */
 public class GlideDisplay {
 
